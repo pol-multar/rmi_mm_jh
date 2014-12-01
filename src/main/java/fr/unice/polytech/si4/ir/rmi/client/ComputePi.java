@@ -21,9 +21,12 @@ public class ComputePi {
             String name = "Compute";
             int port = 1099;
             Registry registry = LocateRegistry.getRegistry(port);
+            // comp est l'objet récupéré à travers le registry
             Compute comp = (Compute) registry.lookup(name);
             Pi task = new Pi(45);
+            //Le client connait seulement l'interface du serveur
             BigDecimal pi = comp.executeTask(task);
+            
             System.out.println(pi);
         } catch (Exception e) {
             System.err.println("ComputePi exception:");

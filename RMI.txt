@@ -1,0 +1,30 @@
+Déploiement pour un client :
+
+﻿Il faut que le client ait accès au serveur, donc il doit connaître l'URL du serveur.
+Il faut qu'il puisse connaître le stub, les classes et méthodes qu'il peut utiliser. Il doit les télécharger depuis le serveur.
+De plus on doit lui fournir un fichier client.policy.
+
+
+Questions de recul :
+
+1 Quelles parties des codes Sockets se rapprochent le plus des stubs ?
+
+Du coté du client, le stub permet de faire la liaison entre le client et les méthodes implémentées par le serveur.
+Tout d'abord, le client doit se connecter au serveur grâce à son url. Pour cela il appelle la méthode
+java.rmi.Naming.
+lookup(String name) qui permet d'obtenir une référence vers un objet du serveur
+permettant ainsi de faire appel directement aux méthodes.
+
+Cette identification par url se rapproche de celle des Sockets puisque celle-ci demande l'adresse IP et le port. En effet pour les Sockets on utilise la méthode java.net.Socket(InetAddress address, int port) pour se connecter au serveur.
+
+Du coté serveur, pour lancer le serveur il faut utiliser le rmiregistry. Cela ressemble aux Sockets où il faut aussi lancer le serveur, cette fois-ci avec la méthode java.net.ServerSocket(int port)
+
+
+
+2 Comment la réflexivité Java peut être utilisée pour générer (ou remplacer) les stubs ?
+
+La réflexivité java peut être utilisée de la manière suivante :
+Elle permet de découvrir la liste et le descriptif des méthodes publiques ainsi que le type des paramètres a lui passer.
+On pourrait donc utiliser directement les méthodes avec leurs paramètres depuis le client, et le serveur appelerait les bonnes méthodes grâce a la fonction invoke.
+
+Même si ce changement est plus lourd à implémenter et à utiliser, il a un avantage par rapport aux stubs. En effet il ne serait plus obligatoire de les regénérer après chaque modification. 
