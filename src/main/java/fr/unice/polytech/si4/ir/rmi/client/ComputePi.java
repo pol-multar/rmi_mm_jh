@@ -26,7 +26,7 @@ public class ComputePi {
             Pi task = new Pi(45);
             //Le client connait seulement l'interface du serveur
             BigDecimal pi = comp.executeTask(task);
-            
+
             System.out.println(pi);
         } catch (Exception e) {
             System.err.println("ComputePi exception:");
