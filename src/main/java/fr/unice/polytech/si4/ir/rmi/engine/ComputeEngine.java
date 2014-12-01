@@ -3,6 +3,8 @@ package fr.unice.polytech.si4.ir.rmi.engine;
 import fr.unice.polytech.si4.ir.rmi.compute.Compute;
 import fr.unice.polytech.si4.ir.rmi.compute.Task;
 
+import java.rmi.RMISecurityManager;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -38,10 +40,21 @@ public class ComputeEngine implements Compute {
     }
 
     public static void main(String[] args) {
+        System.out.println("Mise en en place du registry");
+       try{
+           LocateRegistry.createRegistry(1099);
+        } catch (RemoteException e) {
+           e.printStackTrace();
+        }
+
+        System.out.println("Mise en place du Security Manager ...");
+        System.out.println(System.getProperty("user.dir"));
+
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }
         try {
+            //Attention name doit etre le même dans le client et le serveur
             String name = "Compute";
             Compute engine = new ComputeEngine();
             Compute stub =

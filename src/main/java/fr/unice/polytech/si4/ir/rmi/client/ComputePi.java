@@ -3,6 +3,7 @@ package fr.unice.polytech.si4.ir.rmi.client;
 import fr.unice.polytech.si4.ir.rmi.compute.Compute;
 
 import java.math.BigDecimal;
+import java.rmi.RMISecurityManager;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -16,10 +17,12 @@ public class ComputePi {
         }
 
         try {
+            //Attention name doit etre le même dans le client et le serveur
             String name = "Compute";
-            Registry registry = LocateRegistry.getRegistry(args[0]);
+            int port = 1099;
+            Registry registry = LocateRegistry.getRegistry(port);
             Compute comp = (Compute) registry.lookup(name);
-            Pi task = new Pi(Integer.parseInt(args[1]));
+            Pi task = new Pi(45);
             BigDecimal pi = comp.executeTask(task);
             System.out.println(pi);
         } catch (Exception e) {
