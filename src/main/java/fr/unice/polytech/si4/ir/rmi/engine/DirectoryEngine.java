@@ -62,7 +62,7 @@ public class DirectoryEngine implements Directory {
 
 
         } else {
-            
+
             printInfo(name + " n'a pas de surnom ");
             return "NOSNAME";
         }
